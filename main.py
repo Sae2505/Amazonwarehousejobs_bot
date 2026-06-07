@@ -4,12 +4,29 @@ import os
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
 
-url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+# Example Amazon Jobs (we will later improve this)
+jobs = [
+    {
+        "title": "Amazon Warehouse Operative",
+        "location": "UK",
+        "link": "https://www.amazon.jobs"
+    }
+]
 
-r = requests.get(url, params={
-    "chat_id": CHAT_ID,
-    "text": "TEST FROM GITHUB ACTION 🚀"
-})
+for job in jobs:
+    message = f"""
+🏭 Amazon Job Found!
 
-print("STATUS CODE:", r.status_code)
-print("RESPONSE:", r.text)
+📌 Role: {job['title']}
+📍 Location: {job['location']}
+🔗 Apply: {job['link']}
+"""
+
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    requests.get(url, params={
+        "chat_id": CHAT_ID,
+        "text": message
+    })
+
+print("DONE SENDING JOBS")
