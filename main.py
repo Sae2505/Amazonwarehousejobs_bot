@@ -1,14 +1,14 @@
 import requests
+import os
 
-BOT_TOKEN = "PASTE_NEW_TOKEN_HERE"
-CHAT_ID = "8590592063"
+BOT_TOKEN = os.environ["BOT_TOKEN"]
+CHAT_ID = os.environ["CHAT_ID"]
 
-requests.get(
-    f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
-    params={
-        "chat_id": CHAT_ID,
-        "text": "Direct test message 🚀"
-    }
-)
+url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
-print("done")
+response = requests.get(url, params={
+    "chat_id": CHAT_ID,
+    "text": "Testing bot connection 🚀"
+})
+
+print(response.text)
