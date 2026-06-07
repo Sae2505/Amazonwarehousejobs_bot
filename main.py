@@ -1,32 +1,31 @@
-import requests
-import os
+name: Amazon Job Bot
 
-BOT_TOKEN = os.environ["BOT_TOKEN"]
-CHAT_ID = os.environ["CHAT_ID"]
+on:
+  workflow_dispatch:
 
-# Example Amazon Jobs (we will later improve this)
-jobs = [
-    {
-        "title": "Amazon Warehouse Operative",
-        "location": "UK",
-        "link": "https://www.amazon.jobs"
-    }
-]
+jobs:
+  run:
+    runs-on: ubuntu-latest
 
-for job in jobs:
-    message = f"""
-🏭 Amazon Job Found!
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-📌 Role: {job['title']}
-📍 Location: {job['location']}
-🔗 Apply: {job['link']}
-"""
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+      - name: Install requests
+        run: pip install requests
 
-    requests.get(url, params={
-        "chat_id": CHAT_ID,
-        "text": message
-    })
+      - name: Show files (DEBUG)
+        run: ls -al
 
-print("DONE SENDING JOBS")
+      - name: Run bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: |
+          echo "STARTING PYTHON"
+          python main.py
