@@ -1,17 +1,14 @@
 import requests
-import os
 
-BOT_TOKEN = os.environ["BOT_TOKEN"]
-CHAT_ID = os.environ["CHAT_ID"]
+BOT_TOKEN = "PASTE_NEW_TOKEN_HERE"
+CHAT_ID = "8590592063"
 
-message = "Amazon Jobs Bot is running."
-
-url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-
-requests.post(
-    url,
-    data={
+requests.get(
+    f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+    params={
         "chat_id": CHAT_ID,
-        "text": message
+        "text": "Direct test message 🚀"
     }
 )
+
+print("done")
