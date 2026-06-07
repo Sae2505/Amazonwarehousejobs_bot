@@ -8,7 +8,8 @@ url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
 response = requests.get(url, params={
     "chat_id": CHAT_ID,
-    "text": "Testing bot connection 🚀"
+    "text": "🔥 Bot test working from GitHub Actions"
 })
 
+print(response.status_code)
 print(response.text)
